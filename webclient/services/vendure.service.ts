@@ -4,6 +4,7 @@ import {
   gql,
   InMemoryCache,
 } from "@apollo/client";
+import { productListing } from "../queries/product.queries";
 
 export class VendureService {
   private __client;
@@ -17,15 +18,7 @@ export class VendureService {
 
   public fetchProducts = async (): Promise<ApolloQueryResult<any>> => {
     const response = await this.__client.query({
-      query: gql`
-        query {
-          products {
-            items {
-              name
-            }
-          }
-        }
-      `,
+      query: productListing,
     });
     return response;
   };

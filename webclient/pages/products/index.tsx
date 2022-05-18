@@ -1,9 +1,10 @@
 import { ApolloClient, gql, InMemoryCache } from "@apollo/client";
 import { GetStaticProps } from "next";
+import { ProductItem } from "../../contracts/products.type";
 import { VendureService } from "../../services/vendure.service";
 
 interface Props {
-  products: Array<any>;
+  products: Array<ProductItem>;
 }
 
 const ProductsPage: React.FC<Props> = ({ products }) => {
@@ -11,7 +12,7 @@ const ProductsPage: React.FC<Props> = ({ products }) => {
     <div>
       {products.length > 0 &&
         products.map((product) => {
-          return <div key={product.name}>{product.name}</div>;
+          return <div key={product.id}>{product.name}</div>;
         })}
     </div>
   );
