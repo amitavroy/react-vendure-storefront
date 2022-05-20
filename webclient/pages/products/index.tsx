@@ -1,5 +1,7 @@
 import { ApolloClient, gql, InMemoryCache } from "@apollo/client";
 import { GetStaticProps } from "next";
+import Layout from "../../components/Layout";
+import ProductCard from "../../components/ProductCard";
 import { ProductItem } from "../../contracts/products.type";
 import { VendureService } from "../../services/vendure.service";
 
@@ -9,11 +11,20 @@ interface Props {
 
 const ProductsPage: React.FC<Props> = ({ products }) => {
   return (
-    <div>
-      {products.length > 0 &&
-        products.map((product) => {
-          return <div key={product.id}>{product.name}</div>;
-        })}
+    <div className="antialiased">
+      <Layout pageTitle="Product list">
+        <div className="flex">
+          <div className="flex-none w-60 pr-4 pt-6">Sidebar</div>
+          <div className="flex-initial">
+            <div className="grid grid-cols-4 gap-2">
+              {products.length > 0 &&
+                products.map((product) => {
+                  return <ProductCard product={product} />;
+                })}
+            </div>
+          </div>
+        </div>
+      </Layout>
     </div>
   );
 };

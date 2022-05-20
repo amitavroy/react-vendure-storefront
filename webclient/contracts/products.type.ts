@@ -5,7 +5,7 @@ export interface ProductItem {
   name: string;
   slug: string;
   featuredAsset: Asset;
-  variant: Array<ProductVariant>;
+  variants: Array<ProductVariant>;
 }
 
 export interface ProductVariant {
