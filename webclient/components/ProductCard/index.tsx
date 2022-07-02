@@ -9,7 +9,7 @@ interface Props {
 
 const ProductCard: React.FC<Props> = ({ product }) => {
   return (
-    <Link href={`/products/details/${product.slug}`}>
+    <Link href={`/products/view/${product.slug}`}>
       <a className="block">
         <div className="flex justify-center">
           <strong className="relative h-6 px-4 text-xs leading-6 text-white uppercase bg-black">
