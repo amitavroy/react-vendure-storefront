@@ -1,7 +1,9 @@
 import { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import { ParsedUrlQuery } from "querystring";
 import Layout from "../../../components/Layout";
+import { ProductView } from "../../../components/ProductView";
 import { ProductItem } from "../../../contracts/products.type";
+import { productDetail } from "../../../services/adaptor/vendure";
 import { VendureService } from "../../../services/vendure.service";
 
 interface IParams extends ParsedUrlQuery {
@@ -14,7 +16,7 @@ interface Props {
 const ProductDetailsPage: NextPage<Props> = ({ product }) => {
   return (
     <Layout pageTitle={product.name}>
-      <h1>{product.name}</h1>
+      <ProductView product={productDetail(product)} />
     </Layout>
   );
 };

@@ -4,6 +4,7 @@ export interface ProductItem {
   id: number;
   name: string;
   slug: string;
+  description: string;
   featuredAsset: Asset;
   variants: Array<ProductVariant>;
 }
