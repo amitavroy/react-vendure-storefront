@@ -51,7 +51,7 @@ const Header = () => {
               </a>
             </Link>
 
-            <Link href={"/register"}>
+            <Link href={"/user/register"}>
               <a className="block h-16 leading-[4rem] border-b-4 border-transparent hover:text-red-700 hover:border-current">
                 Register
               </a>
