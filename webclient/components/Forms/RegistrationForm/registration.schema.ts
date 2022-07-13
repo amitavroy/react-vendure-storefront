@@ -9,5 +9,5 @@ export const RegistrationSchema = Yup.object().shape({
     .min(2, "Too short")
     .max(255, "Too long!")
     .required("Password is required"),
-  phoneNumber: Yup.string().min(13, "Too short").max(13, "Too long!"),
+  phoneNumber: Yup.string().min(10, "Too short").max(13, "Too long!"),
 });

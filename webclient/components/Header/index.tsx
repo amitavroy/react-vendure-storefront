@@ -22,7 +22,7 @@ const Header = () => {
             </svg>
           </button>
 
-          <Link href="/products">
+          <Link href="/">
             <a className="flex">
               <span className="inline-block w-32 h-10 bg-gray-200 rounded-lg"></span>
             </a>
@@ -86,7 +86,7 @@ const Header = () => {
 
               <span>
                 <a
-                  href="/account"
+                  href="/user/login"
                   className="block p-6 border-b-4 border-transparent hover:border-red-700"
                 >
                   <svg

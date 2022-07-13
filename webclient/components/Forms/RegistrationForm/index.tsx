@@ -1,5 +1,6 @@
 import { useMutation } from "@apollo/client";
 import { Field, Form, Formik, FormikHelpers } from "formik";
+import React from "react";
 import { userRegistrationMutation } from "../../../queries/mutations/user-registration.mutation";
 import { FormFieldError } from "../../FormFieldError";
 import { RegistrationSchema } from "./registration.schema";
@@ -13,25 +14,29 @@ interface Values {
   password: string;
 }
 
-export const RegistrationForm = () => {
+interface Props {
+  onSuccess: () => void;
+}
+
+export const RegistrationForm: React.FC<Props> = ({ onSuccess }) => {
   const [register, { error }] = useMutation(userRegistrationMutation);
   const formInitValues: Values = {
-    title: "Mr.",
-    firstName: "Jhon",
-    lastName: "Doe",
-    emailAddress: "jhon.doe@gmail.com",
-    phoneNumber: "9820098200111",
-    password: "Password@123",
+    title: "",
+    firstName: "",
+    lastName: "",
+    emailAddress: "",
+    phoneNumber: "",
+    password: "",
   };
 
-  const handleSubmit = (
+  const handleSubmit = async (
     values: Values,
     { setSubmitting, resetForm }: FormikHelpers<Values>
   ) => {
     setSubmitting(false);
     console.log("value", values);
     const { emailAddress, firstName, lastName, phoneNumber, password } = values;
-    register({
+    const resp = await register({
       variables: {
         email: emailAddress,
         firstName,
@@ -40,6 +45,10 @@ export const RegistrationForm = () => {
         password,
       },
     });
+    if (!resp.errors) {
+      resetForm();
+      onSuccess();
+    }
   };
 
   return (
