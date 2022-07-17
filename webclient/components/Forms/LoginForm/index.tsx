@@ -25,7 +25,6 @@ export const LoginForm: React.FC<Props> = ({ onSuccess }) => {
     { setSubmitting, resetForm }: FormikHelpers<Values>
   ) => {
     setSubmitting(false);
-    console.log("value", values);
     const resp = await login({ variables: values });
     if (!resp.errors) {
       resetForm();

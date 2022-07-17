@@ -19,7 +19,7 @@ const ProductsPage: React.FC<Props> = ({ products }) => {
             <div className="grid grid-cols-4 gap-2">
               {products.length > 0 &&
                 products.map((product) => {
-                  return <ProductCard product={product} />;
+                  return <ProductCard product={product} key={product.id} />;
                 })}
             </div>
           </div>

@@ -23,7 +23,6 @@ export const TokenVerifyForm: React.FC<Props> = ({ onSuccess }) => {
     { setSubmitting, resetForm }: FormikHelpers<Values>
   ) => {
     setSubmitting(false);
-    console.log("value", values);
     const resp = await verify({
       variables: values,
     });
