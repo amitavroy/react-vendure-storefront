@@ -2,6 +2,7 @@ import { GetStaticProps } from "next";
 
 import Layout from "../components/Layout";
 import ProductCard from "../components/ProductCard";
+import { Sidebar } from "../components/Sidebar";
 import { ProductItem } from "../contracts/products.type";
 import { VendureService } from "../services/vendure.service";
 
@@ -14,7 +15,9 @@ const ProductsPage: React.FC<Props> = ({ products }) => {
     <div className="antialiased">
       <Layout pageTitle="Product list">
         <div className="flex">
-          <div className="flex-none w-60 pr-4 pt-6">Sidebar</div>
+          <div className="flex-none w-60 pr-4 pt-6">
+            <Sidebar />
+          </div>
           <div className="flex-initial">
             <div className="grid grid-cols-4 gap-2">
               {products.length > 0 &&
