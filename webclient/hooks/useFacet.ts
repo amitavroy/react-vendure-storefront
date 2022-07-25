@@ -8,7 +8,11 @@ export interface IFacetItems {
   values: Array<unknown>;
 }
 
-const useFacet = () => {
+interface useFacetHookType {
+  facetData: Array<IFacetItems>;
+}
+
+const useFacet = (): useFacetHookType => {
   const [facetData, setFacetData] = useState([]);
   const { loading, error, data } = useQuery(facetsQuery);
 
@@ -17,10 +21,10 @@ const useFacet = () => {
   }, [data]);
 
   if (loading || error) {
-    return [null];
+    return { facetData };
   }
 
-  return [facetData];
+  return { facetData };
 };
 
 export default useFacet;
