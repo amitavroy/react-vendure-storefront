@@ -1,23 +1,12 @@
 import { gql } from "@apollo/client";
+import { PRODUCTS_FULL_VIEW_FRAGMENT } from "./fragments/product-full-view.fragment";
 
 export const productListing = gql`
+  ${PRODUCTS_FULL_VIEW_FRAGMENT}
   query {
     products {
       items {
-        id
-        name
-        slug
-        featuredAsset {
-          width
-          height
-          preview
-        }
-        variants {
-          sku
-          name
-          productId
-          price
-        }
+        ...product
       }
     }
   }

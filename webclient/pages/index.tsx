@@ -1,5 +1,6 @@
 import { useLazyQuery } from "@apollo/client";
 import { GetStaticProps } from "next";
+import { useEffect, useRef, useState } from "react";
 
 import Layout from "../components/Layout";
 import ProductCard from "../components/ProductCard";
@@ -11,12 +12,18 @@ import { searchProductQuery } from "../queries/search-product.query";
 import { VendureService } from "../services/vendure.service";
 
 interface Props {
-  products: Array<ProductItem>;
+  productProps: Array<ProductItem>;
 }
 
-const ProductsPage: React.FC<Props> = ({ products }) => {
+const ProductsPage: React.FC<Props> = ({ productProps }) => {
+  const pageTopRef = useRef<HTMLDivElement>(null);
+  const [products, setProducts] = useState<Array<ProductItem>>();
   const [getIds, { loading, error, data }] = useLazyQuery(searchProductQuery);
   const [getProducts, {}] = useLazyQuery(filterProductsQuery);
+
+  useEffect(() => {
+    setProducts(productProps);
+  }, [productProps]);
 
   const handleFilterPageData = async (data: IFacetValueItem[]) => {
     const ids: number[] = [];
@@ -32,6 +39,13 @@ const ProductsPage: React.FC<Props> = ({ products }) => {
 
     const prodIds: string[] = uniqueResult.map((value) => value.id.toString());
     const newProductData = await getProducts({ variables: { ids: prodIds } });
+    setProducts(newProductData.data?.products?.items);
+    const pageTop = pageTopRef.current;
+    pageTop &&
+      pageTop.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
   };
   return (
     <div className="antialiased">
@@ -40,9 +54,10 @@ const ProductsPage: React.FC<Props> = ({ products }) => {
           <div className="flex-none w-60 pr-4 pt-6">
             <Sidebar handleFilter={(data) => handleFilterPageData(data)} />
           </div>
-          <div className="flex-initial">
+          <div className="flex-initial" ref={pageTopRef}>
             <div className="grid grid-cols-4 gap-2">
-              {products.length > 0 &&
+              {products &&
+                products.length > 0 &&
                 products.map((product) => {
                   return <ProductCard product={product} key={product.id} />;
                 })}
@@ -61,7 +76,7 @@ export const getStaticProps: GetStaticProps = async (): Promise<any> => {
   const { data } = await gqService.fetchProducts();
   return {
     props: {
-      products: data.products.items,
+      productProps: data.products.items,
     },
   };
 };
