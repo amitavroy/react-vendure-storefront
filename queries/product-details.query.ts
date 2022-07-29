@@ -17,6 +17,10 @@ export const productDetailsBySlug = gql`
       facetValues {
         name
         code
+        id
+        facet {
+          name
+        }
       }
       variantList {
         totalItems

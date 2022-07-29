@@ -14,6 +14,24 @@ interface Props {
 }
 
 const ProductDetailsPage: NextPage<Props> = ({ product }) => {
+  console.log("first product", product.facetValues);
+  // const facets: Array<Array<string>> = [];
+  const facets: any = [];
+  if (product.facetValues && product.facetValues.length > 0) {
+    product.facetValues.forEach((values) => {
+      // working
+      if (!facets[values.facet.name]) {
+        facets[values.facet.name] = new Array();
+        facets[values.facet.name].push(values.name);
+      } else {
+        facets[values.facet.name].push(values.name);
+      }
+
+      // typical php
+      // facets[values.facet.name][] = values.name;
+    });
+    console.log("facets", facets);
+  }
   return (
     <Layout pageTitle={product.name}>
       <ProductView product={productDetail(product)} />

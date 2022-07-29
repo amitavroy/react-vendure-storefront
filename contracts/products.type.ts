@@ -7,6 +7,7 @@ export interface ProductItem {
   description: string;
   featuredAsset: Asset;
   variants: Array<ProductVariant>;
+  facetValues: Array<IFacetValues>;
 }
 
 export interface ProductVariant {
@@ -14,4 +15,11 @@ export interface ProductVariant {
   name: string;
   productId: number;
   price: number;
+}
+
+export interface IFacetValues {
+  id: string;
+  code: string;
+  name: string;
+  facet: { name: string };
 }
