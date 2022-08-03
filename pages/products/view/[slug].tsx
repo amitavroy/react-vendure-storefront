@@ -1,8 +1,10 @@
+import { useMutation } from "@apollo/client";
 import { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import { ParsedUrlQuery } from "querystring";
 import Layout from "../../../components/Layout";
 import { ProductView } from "../../../components/ProductView";
 import { ProductItem } from "../../../contracts/products.type";
+import { addItemToOrderMutation } from "../../../queries/mutations/add-item-to-order";
 import { productDetail } from "../../../services/adaptor/vendure";
 import { VendureService } from "../../../services/vendure.service";
 
@@ -18,6 +20,9 @@ interface IProductFacet {
 }
 
 const ProductDetailsPage: NextPage<Props> = ({ product }) => {
+  const [addItemToOrder, { loading, data, error }] = useMutation(
+    addItemToOrderMutation
+  );
   const facets: IProductFacet = {};
   if (product.facetValues && product.facetValues.length > 0) {
     product.facetValues.forEach((values) => {
@@ -27,7 +32,12 @@ const ProductDetailsPage: NextPage<Props> = ({ product }) => {
   }
   return (
     <Layout pageTitle={product.name}>
-      <ProductView product={productDetail(product)} />
+      <ProductView
+        product={productDetail(product)}
+        addedToCart={(id, qty) =>
+          addItemToOrder({ variables: { productId: id, qty } })
+        }
+      />
     </Layout>
   );
 };

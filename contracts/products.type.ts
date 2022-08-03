@@ -1,7 +1,7 @@
 import { Asset } from "./common/asset.type";
 
 export interface ProductItem {
-  id: number;
+  id: string;
   name: string;
   slug: string;
   description: string;

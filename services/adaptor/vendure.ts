@@ -3,8 +3,9 @@ import { ProductItem } from "../../contracts/products.type";
 import { getRandomNumber } from "../utils";
 
 export const productDetail = (data: ProductItem) => {
-  const { name, featuredAsset, variants, description } = data;
+  const { name, featuredAsset, variants, description, id } = data;
   const newProduct: IProductDetail = {
+    id,
     title: name,
     price: variants[0].price.toString(),
     featuredImage: featuredAsset,

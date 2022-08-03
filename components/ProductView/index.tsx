@@ -5,9 +5,11 @@ import { ProductAttribute } from "./ProductAttribute";
 
 export interface Props {
   product: IProductDetail;
+  addedToCart: (id: string, qty: number) => void;
 }
 
 export interface IProductDetail {
+  id: string;
   title: string;
   price: string;
   featuredImage: IAsset;
@@ -23,8 +25,8 @@ export interface IProductAttr {
   values: Array<string>;
 }
 
-export const ProductView: FC<Props> = ({ product }) => {
-  const { title, featuredImage, price } = product;
+export const ProductView: FC<Props> = ({ product, addedToCart }) => {
+  const { title, featuredImage, price, id } = product;
   return (
     <section>
       <div className="relative max-w-screen-xl px-4 py-8 mx-auto">
@@ -88,7 +90,7 @@ export const ProductView: FC<Props> = ({ product }) => {
               </div>
             </details>
 
-            <form className="mt-8">
+            <div className="mt-8">
               {product.attributes &&
                 product.attributes.length > 0 &&
                 product.attributes.map((attribute, index) => (
@@ -113,11 +115,12 @@ export const ProductView: FC<Props> = ({ product }) => {
                 <button
                   type="submit"
                   className="block px-5 py-3 ml-3 text-xs font-medium text-white bg-green-600 rounded hover:bg-green-500"
+                  onClick={() => addedToCart(id, 1)}
                 >
                   Add to Cart
                 </button>
               </div>
-            </form>
+            </div>
           </div>
         </div>
       </div>
