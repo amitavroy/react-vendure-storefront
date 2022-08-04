@@ -30,6 +30,7 @@ export const productDetailsBySlug = gql`
         name
         productId
         price
+        id
       }
     }
   }

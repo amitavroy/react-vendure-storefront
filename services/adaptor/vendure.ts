@@ -5,7 +5,7 @@ import { getRandomNumber } from "../utils";
 export const productDetail = (data: ProductItem) => {
   const { name, featuredAsset, variants, description, id } = data;
   const newProduct: IProductDetail = {
-    id,
+    id: variants[0].id.toString(),
     title: name,
     price: variants[0].price.toString(),
     featuredImage: featuredAsset,
