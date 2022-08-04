@@ -1,11 +1,12 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import { Asset as IAsset } from "../../contracts/common/asset.type";
+import { ProductVariant } from "../../contracts/products.type";
 import Asset from "../Asset";
 import { ProductAttribute } from "./ProductAttribute";
 
 export interface Props {
   product: IProductDetail;
-  addedToCart: (id: string, qty: number) => void;
+  addedToCart: (id: string, qty: string) => void;
 }
 
 export interface IProductDetail {
@@ -18,6 +19,7 @@ export interface IProductDetail {
   stars?: number;
   productThumbUrls?: Array<string>;
   attributes?: Array<IProductAttr>;
+  variants: Array<ProductVariant>;
 }
 
 export interface IProductAttr {
@@ -26,6 +28,8 @@ export interface IProductAttr {
 }
 
 export const ProductView: FC<Props> = ({ product, addedToCart }) => {
+  const [qty, setQty] = useState("1");
+  const [currVariant, setCurrVariant] = useState(product.variants[0]);
   const { title, featuredImage, price, id } = product;
   return (
     <section>
@@ -59,7 +63,7 @@ export const ProductView: FC<Props> = ({ product, addedToCart }) => {
 
             <div className="flex justify-between mt-8">
               <div className="max-w-[35ch]">
-                <h1 className="text-2xl font-bold">{product.title}</h1>
+                <h1 className="text-2xl font-bold">{currVariant.name}</h1>
 
                 {product.subTitle && (
                   <p className="mt-0.5 text-sm">{product.subTitle}</p>
@@ -68,7 +72,7 @@ export const ProductView: FC<Props> = ({ product, addedToCart }) => {
                 <div className="flex mt-2 -ml-0.5">{renderStars(product)}</div>
               </div>
 
-              <p className="text-lg font-bold">${price}</p>
+              <p className="text-lg font-bold">${currVariant.price}</p>
             </div>
 
             <details className="relative mt-4 group">
@@ -91,6 +95,23 @@ export const ProductView: FC<Props> = ({ product, addedToCart }) => {
             </details>
 
             <div className="mt-8">
+              <strong>Variants:</strong>
+              {product.variants.map((variant) => {
+                return (
+                  <div
+                    key={variant.sku}
+                    className={`cursor-pointer ${
+                      variant.id == currVariant.id && "text-blue-900 underline"
+                    }`}
+                    onClick={() => setCurrVariant(variant)}
+                  >
+                    {variant.name}
+                  </div>
+                );
+              })}
+            </div>
+
+            <div className="mt-8">
               {product.attributes &&
                 product.attributes.length > 0 &&
                 product.attributes.map((attribute, index) => (
@@ -107,7 +128,8 @@ export const ProductView: FC<Props> = ({ product, addedToCart }) => {
                     type="number"
                     id="quantity"
                     min="1"
-                    value="1"
+                    value={qty}
+                    onChange={(event) => setQty(event.target.value)}
                     className="w-12 py-3 text-xs text-center border-gray-200 rounded no-spinners"
                   />
                 </div>
@@ -115,7 +137,7 @@ export const ProductView: FC<Props> = ({ product, addedToCart }) => {
                 <button
                   type="submit"
                   className="block px-5 py-3 ml-3 text-xs font-medium text-white bg-green-600 rounded hover:bg-green-500"
-                  onClick={() => addedToCart(id, 1)}
+                  onClick={() => addedToCart(currVariant.id.toString(), qty)}
                 >
                   Add to Cart
                 </button>
@@ -134,6 +156,7 @@ const renderStars = (product: IProductDetail) => {
   for (let i = 0; i < 5; i++) {
     starMarkup.push(
       <svg
+        key={`start-${i}`}
         className={`w-5 h-5 ${
           i < countStars ? "text-yellow-400" : "text-gray-400"
         }`}

@@ -35,7 +35,7 @@ const ProductDetailsPage: NextPage<Props> = ({ product }) => {
       <ProductView
         product={productDetail(product)}
         addedToCart={(id, qty) =>
-          addItemToOrder({ variables: { productId: id, qty } })
+          addItemToOrder({ variables: { productId: id, qty: parseInt(qty) } })
         }
       />
     </Layout>
