@@ -22,7 +22,7 @@ const ProductCard: React.FC<Props> = ({ product }) => {
         <h5 className="mt-4 text-sm text-gray-700">{product.name}</h5>
 
         <div className="flex items-center justify-between mt-4 font-medium">
-          <p>INR {product.variants[0].price}</p>
+          <p>${product.variants[0].price}</p>
           {product.variants.length > 1 && (
             <p className="text-xs tracking-wide uppercase">
               {product.variants.length} variants

@@ -95,23 +95,6 @@ export const ProductView: FC<Props> = ({ product, addedToCart }) => {
             </details>
 
             <div className="mt-8">
-              <strong>Variants:</strong>
-              {product.variants.map((variant) => {
-                return (
-                  <div
-                    key={variant.sku}
-                    className={`cursor-pointer ${
-                      variant.id == currVariant.id && "text-blue-900 underline"
-                    }`}
-                    onClick={() => setCurrVariant(variant)}
-                  >
-                    {variant.name}
-                  </div>
-                );
-              })}
-            </div>
-
-            <div className="mt-8">
               {product.attributes &&
                 product.attributes.length > 0 &&
                 product.attributes.map((attribute, index) => (
