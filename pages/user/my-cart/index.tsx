@@ -11,6 +11,7 @@ const MyCartPage: NextPage = () => {
   const [activeOrder, setActiveOrder] = useState<IActiveOrder | null>(null);
   const { data, loading, error } = useQuery<IActiveOrder>(myCartQuery);
   useEffect(() => {
+    console.log(data?.activeOrder);
     data?.activeOrder && setActiveOrder(data);
   }, [data]);
   return (
@@ -38,7 +39,7 @@ const MyCartPage: NextPage = () => {
               activeOrder != null &&
               activeOrder?.activeOrder?.lines.map((line) => {
                 return (
-                  <tr>
+                  <tr key={line.id}>
                     <td className="py-4 px-6">
                       <div className="flex">
                         <div className="w-16 h-16 mr-4">
