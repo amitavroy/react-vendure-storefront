@@ -1,6 +1,8 @@
 import { gql } from "@apollo/client";
+import { FEATURED_ASSET } from "./fragments/featured-asset.fragment";
 
 export const productDetailsBySlug = gql`
+  ${FEATURED_ASSET}
   query ($slug: String!) {
     product(slug: $slug) {
       id
@@ -10,9 +12,7 @@ export const productDetailsBySlug = gql`
       name
       description
       featuredAsset {
-        width
-        height
-        preview
+        ...featuredAsset
       }
       facetValues {
         name

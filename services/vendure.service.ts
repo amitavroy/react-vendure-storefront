@@ -4,6 +4,7 @@ import {
   gql,
   InMemoryCache,
 } from "@apollo/client";
+import { myCartQuery } from "../queries/my-cart.query";
 import { productDetailsBySlug } from "../queries/product-details.query";
 import { productSlug } from "../queries/product-slug.query";
 import { productListing } from "../queries/product.queries";

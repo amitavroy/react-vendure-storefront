@@ -59,7 +59,7 @@ const Header = () => {
           <div className="flex items-center ml-8">
             <div className="flex items-center border-gray-100 divide-x divide-gray-100 border-x">
               <span>
-                <Link href="/">
+                <Link href="/user/my-cart">
                   <a className="block p-6 border-b-4 border-transparent hover:border-red-700">
                     <svg
                       className="w-4 h-4"

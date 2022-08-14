@@ -16,6 +16,7 @@ export interface ProductVariant {
   productId: number;
   price: number;
   id: number;
+  product: ProductItem;
 }
 
 export interface IFacetValues {
