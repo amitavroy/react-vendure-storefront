@@ -1,6 +1,7 @@
 import React, { FC, useState } from "react";
 import { Asset as IAsset } from "../../contracts/common/asset.type";
 import { ProductVariant } from "../../contracts/products.type";
+import { numberToCurrency } from "../../services/utils";
 import Asset from "../Asset";
 import { ProductAttribute } from "./ProductAttribute";
 
@@ -72,7 +73,9 @@ export const ProductView: FC<Props> = ({ product, addedToCart }) => {
                 <div className="flex mt-2 -ml-0.5">{renderStars(product)}</div>
               </div>
 
-              <p className="text-lg font-bold">${currVariant.price}</p>
+              <p className="text-lg font-bold">
+                {numberToCurrency(currVariant.price)}
+              </p>
             </div>
 
             <details className="relative mt-4 group">

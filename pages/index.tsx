@@ -55,7 +55,7 @@ const ProductsPage: React.FC<Props> = ({ productProps }) => {
             <Sidebar handleFilter={(data) => handleFilterPageData(data)} />
           </div>
           <div className="flex-initial" ref={pageTopRef}>
-            <div className="grid grid-cols-4 gap-2">
+            <div className="grid grid-cols-4 gap-4">
               {products &&
                 products.length > 0 &&
                 products.map((product) => {

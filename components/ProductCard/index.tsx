@@ -1,6 +1,7 @@
 import Link from "next/link";
 import React from "react";
 import { ProductItem } from "../../contracts/products.type";
+import { numberToCurrency } from "../../services/utils";
 import Asset from "../Asset";
 
 interface Props {
@@ -19,10 +20,10 @@ const ProductCard: React.FC<Props> = ({ product }) => {
 
         {product.featuredAsset && <Asset asset={product.featuredAsset} />}
 
-        <h5 className="mt-4 text-sm text-gray-700">{product.name}</h5>
+        <h5 className="mt-1 text-sm text-gray-700">{product.name}</h5>
 
-        <div className="flex items-center justify-between mt-4 font-medium">
-          <p>${product.variants[0].price}</p>
+        <div className="flex items-center justify-between mt-1 font-medium">
+          <p>{numberToCurrency(product.variants[0].price)}</p>
           {product.variants.length > 1 && (
             <p className="text-xs tracking-wide uppercase">
               {product.variants.length} variants
