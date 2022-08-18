@@ -1,4 +1,5 @@
 export interface IAddress {
+  id: number;
   fullName: string;
   streetLine1: string;
   streetLine2: string;

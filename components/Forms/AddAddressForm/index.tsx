@@ -1,23 +1,29 @@
 import { useMutation } from "@apollo/client";
 import { Field, Form, Formik, FormikHelpers } from "formik";
+import React from "react";
+import { IAddress } from "../../../contracts/common/address.type";
 
 import { addAddressToCustomerMutation } from "../../../queries/mutations/address-to-customer.mutation";
 import { FormFieldError } from "../../FormFieldError";
 
+interface Props {
+  newAddressAdded: (address: any) => void;
+}
+
 interface IValues {
   fullName: string;
   streetLine1: string;
-  streetLine2?: string;
-  city?: string;
-  province?: string;
-  postalCode?: string;
-  countryCode?: string;
-  phoneNumber?: string;
+  streetLine2: string;
+  city: string;
+  province: string;
+  postalCode: string;
+  countryCode: string;
+  phoneNumber: string;
   defaultShippingAddress: boolean;
   defaultBillingAddress: boolean;
 }
 
-export const AddAddressForm = () => {
+export const AddAddressForm: React.FC<Props> = ({ newAddressAdded }) => {
   const [addAddress, { data, loading, error }] = useMutation(
     addAddressToCustomerMutation
   );
@@ -50,7 +56,7 @@ export const AddAddressForm = () => {
       defaultBillingAddress,
       defaultShippingAddress,
     } = values;
-    addAddress({
+    const newAdd = await addAddress({
       variables: {
         fullName,
         streetLine1,
@@ -62,6 +68,8 @@ export const AddAddressForm = () => {
         phoneNumber,
       },
     });
+    resetForm();
+    newAddressAdded(newAdd.data?.createCustomerAddress);
   };
   return (
     <Formik initialValues={initialFormValues} onSubmit={handleSubmit}>

@@ -16,6 +16,7 @@ export const userAddressQuery = gql`
         }
         postalCode
         phoneNumber
+        province
         defaultShippingAddress
         defaultShippingAddress
       }

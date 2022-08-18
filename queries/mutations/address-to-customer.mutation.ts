@@ -23,7 +23,23 @@ export const addAddressToCustomerMutation = gql`
         phoneNumber: $phoneNumber
       }
     ) {
-      __typename
+      ... on Address {
+        id
+        fullName
+        company
+        streetLine1
+        streetLine2
+        city
+        province
+        country {
+          code
+          name
+        }
+        postalCode
+        phoneNumber
+        defaultShippingAddress
+        defaultShippingAddress
+      }
     }
   }
 `;
