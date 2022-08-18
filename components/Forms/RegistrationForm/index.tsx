@@ -34,7 +34,6 @@ export const RegistrationForm: React.FC<Props> = ({ onSuccess }) => {
     { setSubmitting, resetForm }: FormikHelpers<Values>
   ) => {
     setSubmitting(false);
-    console.log("value", values);
     const { emailAddress, firstName, lastName, phoneNumber, password } = values;
     const resp = await register({
       variables: {

@@ -5,7 +5,7 @@ export interface IAddress {
   city: string;
   province: string;
   postalCode: string;
-  country: string;
+  country: { code: string; name: string };
   countryCode: string;
   phoneNumber: string;
 }
