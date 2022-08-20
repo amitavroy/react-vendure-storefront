@@ -2,13 +2,14 @@ import { useMutation, useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
-import { AddressCard } from "../../../components/Common/AddressCard";
-import { AddAddressForm } from "../../../components/Forms/AddAddressForm";
-import Layout from "../../../components/Layout";
-import { IAddress } from "../../../contracts/common/address.type";
-import { userAddressQuery } from "../../../queries/common/get-user-address.query";
-import { addOrderAddressMutation } from "../../../queries/mutations/add-address-to-order.mutation";
-import { removeCustomerAddressMutation } from "../../../queries/mutations/remove-user-address.mutation";
+import { AddressCard } from "../../../../components/Common/AddressCard";
+import { AddAddressForm } from "../../../../components/Forms/AddAddressForm";
+import Layout from "../../../../components/Layout";
+import { IAddress } from "../../../../contracts/common/address.type";
+import { userAddressQuery } from "../../../../queries/common/get-user-address.query";
+import { addOrderAddressMutation } from "../../../../queries/mutations/add-address-to-order.mutation";
+import { addOrderBillingAddressMutation } from "../../../../queries/mutations/add-billing-address-to-order.mutation";
+import { removeCustomerAddressMutation } from "../../../../queries/mutations/remove-user-address.mutation";
 
 const SelectAddressPage = () => {
   const router = useRouter();
@@ -16,6 +17,7 @@ const SelectAddressPage = () => {
   const { data, refetch: refetchAddress } = useQuery(userAddressQuery);
   const [removeCustomerAddress] = useMutation(removeCustomerAddressMutation);
   const [addOrderAddress] = useMutation(addOrderAddressMutation);
+  const [addBillingAddress] = useMutation(addOrderBillingAddressMutation);
 
   useEffect(() => {
     setAddress(data?.activeCustomer.addresses);
@@ -36,19 +38,19 @@ const SelectAddressPage = () => {
       country,
       phoneNumber,
     } = address;
-    await addOrderAddress({
-      variables: {
-        fullName,
-        streetLine1,
-        streetLine2,
-        city,
-        province,
-        postalCode,
-        countryCode: country.code,
-        phoneNumber,
-      },
-    });
-    router.push("/user/my-cart");
+    const addressInput = {
+      fullName,
+      streetLine1,
+      streetLine2,
+      city,
+      province,
+      postalCode,
+      countryCode: country.code,
+      phoneNumber,
+    };
+    await addOrderAddress({ variables: addressInput });
+    await addBillingAddress({ variables: addressInput });
+    router.push("/user/my-cart/payment-method");
   };
   const removeAddress = (id: number) => {
     removeCustomerAddress({ variables: { id } });
